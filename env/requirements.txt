@@ -1,0 +1,11 @@
+langchain==0.3.24
+langchain-google-genai==2.1.4
+langchain-openai==0.3.28
+langgraph==0.4.1
+numpy==1.26.4
+pandas==2.2.3
+sqlalchemy==2.0.40
+matplotlib>=3.7.0
+seaborn>=0.12.0
+plotly>=5.15.0
+jupyter>=1.1.0
