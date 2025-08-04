@@ -1,4 +1,4 @@
-version: "3.8"
+#version: "3.8"
 
 services:
   kb-dev:
@@ -15,10 +15,33 @@ services:
     environment:
       # OpenAI API 키 등 환경변수 설정
       - PYTHONPATH=/project/main
+      - DB_HOST=pgvector-db
+      - DB_PORT=5432
+      - DB_NAME=postgres
+      - DB_USER=postgres
+      - DB_PASSWORD=postgres
+    depends_on:
+      - pgvector-db
 
     # 컨테이너가 종료되지 않도록 설정
     tty: true
     stdin_open: true
 
     # 재시작 정책
-    restart: unless-stopped
+#    restart: unless-stopped
+
+  pgvector-db:
+    image: pgvector/pgvector:pg16
+    container_name: pgvector-db
+    ports:
+      - "5432:5432"
+    environment:
+      - POSTGRES_USER=postgres
+      - POSTGRES_PASSWORD=postgres
+      - POSTGRES_DB=postgres
+    volumes:
+      - pgdata:/var/lib/postgresql/data
+#    restart: unless-stopped
+
+volumes:
+  pgdata:
