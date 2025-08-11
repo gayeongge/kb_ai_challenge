@@ -1,5 +1,5 @@
-from typing import TypedDict, Optional
+from typing_extensions import TypedDict
 
-class MemoryState(TypedDict):
+
+class InputState(TypedDict):
     input: str
-    output: Optional[str]

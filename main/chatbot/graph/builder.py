@@ -1,13 +1,13 @@
 from langgraph.graph import StateGraph, END
-from state.schema import MemoryState
-from node import ReactAgentNode
+from chatbot.state.schema import InputState
+from chatbot.node.react import ReactAgentNode
 
 class GraphBuilder:
     def __init__(self):
         self.graph = self._build_graph()
 
     def _build_graph(self):
-        graph = StateGraph(MemoryState)
+        graph = StateGraph(InputState)
         react_node = ReactAgentNode()
         graph.add_node("react", react_node)
         graph.add_edge("react", END)
