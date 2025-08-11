@@ -2,7 +2,6 @@ import os
 from langchain.agents import create_react_agent, AgentExecutor
 
 from langchain.prompts import PromptTemplate
-from langchain_core.runnables import Runnable
 from langchain_ollama import ChatOllama
 
 # ReAct용 필수 변수 포함 프롬프트
@@ -31,7 +30,7 @@ REACT_PROMPT = PromptTemplate(
 class ReactAgentNode:
     def __init__(self):
         base_url = os.environ.get("OLLAMA_BASE_URL", "")
-        llm = ChatOllama(model="llama3", streaming=True, base_url=base_url)
+        llm = ChatOllama(model="gemma3:1b", streaming=True, base_url=base_url)
         tools = []  # 사용할 툴이 있다면 여기에 추가
         agent = create_react_agent(llm, tools, prompt=REACT_PROMPT)
         self.executor = AgentExecutor(agent=agent, tools=tools, verbose=True)
