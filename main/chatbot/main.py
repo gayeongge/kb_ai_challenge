@@ -2,6 +2,7 @@ import sqlalchemy
 from sqlalchemy import create_engine, Column, Integer, String, Sequence
 from sqlalchemy.orm import sessionmaker, declarative_base
 from sqlalchemy.exc import SQLAlchemyError
+from graph import GraphBuilder
 
 # PostgreSQL 연결 문자열
 # Container에서 실행시키려면 localhost -> pgvector-db 로 변경
@@ -63,5 +64,13 @@ def insert_and_query_example():
 
 
 if __name__ == "__main__":
+    # TEST 용
     create_db_and_tables()
     insert_and_query_example()
+
+    # CHAT TEST 용
+    builder = GraphBuilder()
+    user_input = input("질문을 입력하세요: ")
+    for chunk in builder.run_graph_streaming(user_input):
+        print(chunk)
+        # print(chunk.get("output", ""), end="", flush=True)
