@@ -1,8 +1,9 @@
 import os
 from langchain.agents import create_react_agent, AgentExecutor
-from langchain_community.chat_models import ChatOllama
+
 from langchain.prompts import PromptTemplate
 from langchain_core.runnables import Runnable
+from langchain_ollama import ChatOllama
 
 # ReAct용 필수 변수 포함 프롬프트
 REACT_PROMPT = PromptTemplate(

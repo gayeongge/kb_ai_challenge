@@ -1,6 +1,7 @@
 langchain==0.3.24
 langchain-google-genai==2.1.4
 langchain-openai==0.3.28
+langchain-ollama==0.3.6
 langgraph==0.4.1
 numpy==1.26.4
 pandas==2.2.3
