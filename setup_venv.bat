@@ -33,15 +33,7 @@ if %errorlevel% neq 0 (
 
 echo.
 echo ==================================================================
-echo  Setup complete! Running the main script...
-echo ==================================================================
-echo.
-
-py .\main\chatbot\main.py
-
-echo.
-echo ==================================================================
-echo  Script execution finished.
+echo  Setup complete!
 echo ==================================================================
 echo.
 pause
