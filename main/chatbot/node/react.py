@@ -1,8 +1,12 @@
 import os
-from langchain.agents import create_react_agent, AgentExecutor
 
+from langchain.agents import create_react_agent, AgentExecutor
 from langchain.prompts import PromptTemplate
 from langchain_ollama import ChatOllama
+
+from state.schema import OutputState
+
+
 
 # ReAct용 필수 변수 포함 프롬프트
 REACT_PROMPT = PromptTemplate(
@@ -29,13 +33,14 @@ REACT_PROMPT = PromptTemplate(
 
 class ReactAgentNode:
     def __init__(self):
-        base_url = os.environ.get("OLLAMA_BASE_URL", "")
-        llm = ChatOllama(model="gemma3:1b", streaming=True, base_url=base_url)
+        self.base_url = os.environ.get("OLLAMA_BASE_URL", "")
+        llm = ChatOllama(model="gemma3:1b", streaming=True, base_url=self.base_url)
         tools = []  # 사용할 툴이 있다면 여기에 추가
         agent = create_react_agent(llm, tools, prompt=REACT_PROMPT)
         self.executor = AgentExecutor(agent=agent, tools=tools, verbose=True)
 
-    def __call__(self, state):
+    def __call__(self, state)-> OutputState:
         # state는 TypedDict로 input 키를 가짐
         input_text = state["input"] if isinstance(state, dict) and "input" in state else state
-        return self.executor.invoke({"input": input_text})
+        output = self.executor.invoke({"input": input_text})['output']
+        return OutputState(output=output)

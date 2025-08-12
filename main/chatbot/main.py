@@ -1,20 +1,22 @@
-import sys
-import os
+import logging
 
-# 'main' 디렉토리를 프로젝트의 루트 경로로 설정
-project_root = os.path.abspath(os.path.join(os.path.dirname(__file__), '..'))
-if project_root not in sys.path:
-    sys.path.insert(0, project_root)
+logging.basicConfig(
+    level=logging.INFO,
+    format="%(asctime)s [%(levelname)s] %(name)s: %(message)s"
+)
 
 import fastapi
 import uvicorn
 
-from chatbot.graph.builder import GraphBuilder
-from chatbot.state.schema import InputState
-from chatbot.util.db_util import create_db_and_tables, insert_and_query_example
+from graph.builder import GraphBuilder
+from graph.chatbot_builder import ChatBuilder
+from state.schema import InputState
+from util.db_util import create_db_and_tables, insert_and_query_example
+
 
 app = fastapi.FastAPI()
-builder = GraphBuilder()
+test_builder = GraphBuilder()
+builder = ChatBuilder()
 
 @app.get("/")
 async def root():
@@ -30,12 +32,17 @@ async def insert_and_query_example_test():
     """PostGreSQL 연결 확인을 위한 테스트 데이터 삽입 요청"""
     return insert_and_query_example()
 
+@app.post("/test/chat")
+async def chatbot_api(request: InputState):
+    """Chatbot API - 수정 가능"""
+    return test_builder.run_graph_streaming(request['input'])
+
 @app.post("/chat")
 async def chatbot_api(request: InputState):
     """Chatbot API - 수정 가능"""
+    logging.info(f"Received input: {request['input']}")
     return builder.run_graph_streaming(request['input'])
 
 
-
 if __name__ == "__main__":
-    uvicorn.run(app, host="0.0.0.0", port=8000)
+    uvicorn.run(app, host="0.0.0.0", port=8001)
