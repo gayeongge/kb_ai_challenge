@@ -6,4 +6,6 @@ class EgenTetoClassifierNode:
         pass
 
     def __call__(self, state):
-        pass
+        # egen_teto 질문은 코딩으로 했다 치자.
+        state['egen_teto_data'] = "너는 에겐이야."
+        return state
