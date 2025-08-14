@@ -1,0 +1,24 @@
+# 필요한 규칙 추가(중복 라인은 자동 무시)
+cat >> .gitignore << 'EOF'
+# Python
+__pycache__/
+*.pyc
+
+# Jupyter
+.ipynb_checkpoints/
+
+# 가상환경 / 빌드 산출물
+kb_env/
+env/
+venv/
+node_modules/
+dist/
+build/
+
+# IDE / OS
+.idea/
+.vscode/
+.DS_Store
+
+# Secrets
+.env
